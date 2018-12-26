@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20181226074933) do
     t.string "name"
     t.string "description"
     t.float  "rating"
+    t.string "comments"
   end
 
   create_table "neighbourhoods", force: :cascade do |t|
