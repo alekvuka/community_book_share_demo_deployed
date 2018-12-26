@@ -1,11 +1,11 @@
 <h1>Share your book with the comminty!</h1>
-<form method='POST' action='/book' form='new_book'><br>
-  book name:<input type='text' name='name'><br>
-  book author:<input type='text' name='author'><br>
-  book description:<input type='text' name='description'><br><br>
+<form method='POST' action='/books' form='new_book'><br>
+  book name:<input type='text' name='name' required><br>
+  book author:<input type='text' name='author' required><br>
+  book description:<input type='text' name='description' required><br><br>
   book rating:<br><br>
 
-  terrible<input type='range' name='rating' min="1" max="5" list="tickmarks">amazing<br><br>
+  terrible<input type='range' name='rating' min="1" max="5" list="tickmarks" required>amazing<br><br>
   <datalist id="tickmarks">
     <option value="1" label="1">
     <option value="2" label="2">

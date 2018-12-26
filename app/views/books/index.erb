@@ -2,5 +2,5 @@
 <h2>Click on one below to see its ratings, comments and readers.</h2>
 <h2>If you want to add a book, click <a href='/books/new'>here!</a></h2>
 <%Book.all.each do |book|%>
-  <a href='/books/show/<%=book.id%>'><%=book.name%></a>
+  <a href='/books/<%=book.slug%>'><%=book.name%></a><br>
 <%end%>
