@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20181226193714) do
   end
 
   create_table "reader_books", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "reader_id"
     t.integer "book_id"
   end
 
