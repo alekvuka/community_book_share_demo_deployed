@@ -3,6 +3,8 @@ class Reader < ActiveRecord::Base
   belongs_to :neighbourhood
   has_many :books, through: :reader_books
 
+  has_secure_password
+
   def slug
     name.downcase.tr(' ', '-')
   end
