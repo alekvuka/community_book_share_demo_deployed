@@ -1,16 +1,30 @@
 class BooksController < ApplicationController
 
   get '/books' do
-    erb :'/books/index'
-  end
-
-  get '/books/:id' do
-    erb :'/books/show'
+    if session[:id]
+      @reader = Reader.find(session[:id])
+      erb :'/books/index'
+    else
+      erb :'/readers/login'
+    end
   end
 
   get '/books/new' do
-    erb :'/books/new'
+    
+    if session[:id]
+      erb :'/books/new'
+    else
+      erb :'/login'
+    end
   end
 
+  get '/books/:id' do
+    if session[:id]
+      @reader = Reader.find(session[:id])
+      erb :'/books/show'
+    else
+      erb :'/readers/login'
+    end
+  end
 
 end

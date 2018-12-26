@@ -1,0 +1,20 @@
+<h1>Share your book with the comminty!</h1>
+<form method='POST' action='/book' form='new_book'><br>
+  book name:<input type='text' name='name'><br>
+  book author:<input type='text' name='author'><br>
+  book description:<input type='text' name='description'><br><br>
+  book rating:<br><br>
+
+  terrible<input type='range' name='rating' min="1" max="5" list="tickmarks">amazing<br><br>
+  <datalist id="tickmarks">
+    <option value="1" label="1">
+    <option value="2" label="2">
+    <option value="3" label="3">
+    <option value="4" label="4">
+    <option value="5" label="5">
+  </datalist>
+
+  your comments/impressions about the book:<br>
+  <textarea form='new_book' rows="4" cols="50"> </textarea><br><br>
+  <input type='submit' value='Share your book!'>
+</form>

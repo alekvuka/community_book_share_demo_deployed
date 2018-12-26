@@ -5,6 +5,18 @@ class ReadersController < ApplicationController
   end
 
   post '/login' do
+    if params[:username].empty? || params[:password].empty?
+      redirect '/login'
+    end
+
+    @user = Reader.find_by(username: params[:username])
+
+    if @user && @user.authenticate(params[:password])
+      session[:id] = @user.id
+      erb :'/books/index'
+    else
+      redirect '/login'
+    end
 
   end
 
@@ -13,7 +25,6 @@ class ReadersController < ApplicationController
   end
 
   post '/signup' do
-  
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
@@ -27,6 +38,11 @@ class ReadersController < ApplicationController
 
     redirect '/books'
 
+  end
+
+  get '/logout' do
+    session.clear
+    erb :'/readers/login'
   end
 
 
