@@ -13,8 +13,8 @@ class ReadersController < ApplicationController
   end
 
   post '/signup' do
-    binding.pry
-    @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username])
+  
+    @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
       @reader.community = Community.create(name: params[:new_community])
@@ -23,7 +23,7 @@ class ReadersController < ApplicationController
     end
 
     @reader.save
-    sessions[:id] = @reader.id
+    session[:id] = @reader.id
 
     redirect '/books'
 
