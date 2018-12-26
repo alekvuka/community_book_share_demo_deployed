@@ -1,4 +1,4 @@
-class Neighbourhood < ActiveRecord::Base
+class Community < ActiveRecord::Base
   has_many :books
   has_many :readers
 
