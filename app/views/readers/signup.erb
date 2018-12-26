@@ -1,8 +1,9 @@
 <h1> Sign Up! </h1>
 <form method="POST" action='/signup'>
   name: <input type='text' name='name'><br>
-  email: <input type='text' name='email'><br>
+  email: <input type='text' name='email'><br><br>
   username: <input type='text' name='username'><br>
+  password: <input type='text' name='password'><br>
   <h3>Choose a community below:</h3>
       <%Community.all.each do |community|%>
          <input type='radio' name='community' value=<%=community%><%=community.name%>
