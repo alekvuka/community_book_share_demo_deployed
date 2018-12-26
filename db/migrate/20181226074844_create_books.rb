@@ -6,6 +6,7 @@ class CreateBooks < ActiveRecord::Migration
       t.string :description
       t.float :rating
       t.string :comments
+      t.string :owner
     end
   end
 end
