@@ -5,6 +5,7 @@ class CreateReaders < ActiveRecord::Migration
       t.string :email
       t.string :username
       t.string :password_digest
-    end 
+      t.integer :community_id
+    end
   end
 end

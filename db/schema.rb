@@ -14,12 +14,13 @@
 ActiveRecord::Schema.define(version: 20181226193714) do
 
   create_table "books", force: :cascade do |t|
-    t.string "author"
-    t.string "name"
-    t.string "description"
-    t.float  "rating"
-    t.string "comments"
-    t.string "owner"
+    t.string  "author"
+    t.string  "name"
+    t.string  "description"
+    t.float   "rating"
+    t.string  "comments"
+    t.string  "owner"
+    t.integer "community_id"
   end
 
   create_table "communities", force: :cascade do |t|
@@ -32,10 +33,11 @@ ActiveRecord::Schema.define(version: 20181226193714) do
   end
 
   create_table "readers", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "username"
-    t.string "password_digest"
+    t.string  "name"
+    t.string  "email"
+    t.string  "username"
+    t.string  "password_digest"
+    t.integer "community_id"
   end
 
 end

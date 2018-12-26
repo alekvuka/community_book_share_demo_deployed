@@ -25,8 +25,6 @@ class ReadersController < ApplicationController
     @reader.save
     sessions[:id] = @reader.id
 
-    binding.pry
-
     redirect '/books'
 
   end

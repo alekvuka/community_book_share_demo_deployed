@@ -1,6 +1,6 @@
 class Book < ActiveRecord::Base
   has_many :reader_books
-  belongs_to :neighbourhood
+  belongs_to :community
   has_many :readers, through: :reader_books
 
   def slug
