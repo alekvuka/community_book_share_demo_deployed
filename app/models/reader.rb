@@ -1,4 +1,4 @@
-class Reader
+class Reader < ActiveRecord::Base
   has_many :reader_books
   belongs_to :neighbourhood
   has_many :books, through: :reader_books
