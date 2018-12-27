@@ -45,10 +45,11 @@ class BooksController < ApplicationController
     redirect '/login'
   end
 
-  post '/rate/:id' do
-    binding.pry
-    Book.find(params[:id]).add_new_rating(params[:rating].to_f).save
-    erb :'/books/index'
+  post '/rate/:slug' do
+    book = Book.find_by_slug(:slug)
+    book.rating = book.add_new_rating(params[:rating].to_f)
+    book.save
+    erb :'books/index'
   end
 
 end
