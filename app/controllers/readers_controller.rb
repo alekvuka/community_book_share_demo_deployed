@@ -72,4 +72,32 @@ class ReadersController < ApplicationController
     end
   end
 
+  patch '/readers/edit/:slug' do
+    if session[:id]
+      @reader = Reader.find(session[:id])
+      @reader.name = params[:name]
+      @reader.username = params[:username]
+      if params[:new_community].empty?
+        @reader.community = Community.find(params[:community])
+      else
+        @reader.community = Community.create(name: params[:new_community])
+      end
+      @reader.save
+      erb :'readers/index'
+    else
+      redirect '/login'
+    end
+
+  end
+
+
+  delete '/readers/delete/:slug' do
+    if session[:id]
+      reader = Reader.find_by_slug(params[:slug])
+      reader.delete
+      redirect '/logout'
+    else
+      redirect '/login'
+    end
+  end
 end
