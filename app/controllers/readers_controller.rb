@@ -40,7 +40,7 @@ class ReadersController < ApplicationController
 
   end
 
-  get '/logout' do
+  get '/readers/logout' do
     session.clear
     erb :'/readers/login'
   end
@@ -54,7 +54,7 @@ class ReadersController < ApplicationController
     end
   end
 
-  get '/reader/:slug' do
+  get '/readers/:slug' do
     if session[:id]
       @reader = Reader.find_by_slug(params[:slug])
       erb :'/readers/show'

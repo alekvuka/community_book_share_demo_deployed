@@ -3,9 +3,17 @@
 
 <%= yield %>
 <p>
+<%if session[:id] != nil%>
   ----------------------------------<br>
-<a href='/readers'>readers</a>
-<a href='/readers/show/<%=Reader.find(session[:id]).slug'>profile</a>
-<a href='/books'>books</a>
-<a href='/readers/logout'>logout</a>
+  <a href='/readers'>readers</a>
+  <a href='/readers/<%=Reader.find(session[:id]).slug%>'>profile</a>
+  <a href='/books'>books</a>
+  <a href='/books/new'>add a book</a>
+  <a href='/readers/logout'>logout</a>
+<%else%>
+  if you don't have an accout, sing up!
+  <form method ='GET' action ='/signup'>
+    <input type='submit' value='signup'>
+  </form>
+<%end%>
 </p>
