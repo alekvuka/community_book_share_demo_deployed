@@ -1,0 +1,16 @@
+<h1> Edit <%=@book.name%></h1>
+<form method='POST' action='/books/edit/<%=@book.slug%>' form='new_book'><br>
+  <input type="hidden" name="_method" value="PATCH">
+  edit book name:<input type='text' name='name' value='<%=@book.name%>'required><br>
+  edit book author:<input type='text' name='author' value='<%=@book.author%>'required><br>
+  edit book description:<input type='text' name='description' value='<%=@book.description%>'required><br><br>
+
+  edit your comments/impressions about the book:<br>
+  <textarea rows="4" cols="50" name='comments'><%=@book.comments%></textarea><br><br>
+  <input type='submit' value='Edit your book!'>
+</form>
+
+<form method='POST' action='/books/delete/<%=@book.slug%>' form='new_book'><br>
+  <input type="hidden" name="_method" value="DELETE">
+  <input type='submit' value='Delete your book!'>
+</form>

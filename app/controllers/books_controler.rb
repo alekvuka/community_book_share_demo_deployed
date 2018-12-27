@@ -10,7 +10,6 @@ class BooksController < ApplicationController
   end
 
   get '/books/new' do
-
     if session[:id]
       erb :'/books/new'
     else
@@ -51,5 +50,32 @@ class BooksController < ApplicationController
     book.save
     erb :'books/index'
   end
+
+  get '/books/edit/:slug' do
+    @book = Book.find_by_slug(params[:slug])
+    erb :'/books/edit'
+  end
+
+  patch '/books/edit/:slug' do
+    book = Book.find_by_slug(params[:slug])
+    if !params[:name].empty?
+      book.name = params[:name]
+    elsif !params[:author].empty?
+      book.author = params[:author]
+    elsif !params[:description].empty?
+      book.description = params[:description]
+    else !params[:comments].empty?
+      book.comments = params[:comments]
+    end
+    book.save
+    redirect '/books'
+  end
+
+  delete '/books/delete/:slug' do
+    book = Book.find_by_slug(params[:slug])
+    book.delete
+    redirect '/books'
+  end
+
 
 end

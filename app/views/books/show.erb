@@ -20,7 +20,7 @@ Have you read the book? Rate it!<br>
 </form>
 
 <%if session[:id].to_s == @book.owner%>
-  <form type='POST' action='/books/edit'>
+  <form type='POST' action='/books/edit/<%=@book.slug%>'>
     <input type='submit' value='edit your book'>
   </form>
 <%end%>

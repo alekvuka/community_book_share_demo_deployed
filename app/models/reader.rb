@@ -10,6 +10,6 @@ class Reader < ActiveRecord::Base
   end
 
   def self.find_by_slug(slug)
-    Song.all.find { |song| song.slug == slug }
+    Reader.all.find { |reader| reader.slug == slug }
   end
 end
