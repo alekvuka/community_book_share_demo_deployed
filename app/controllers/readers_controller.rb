@@ -45,7 +45,22 @@ class ReadersController < ApplicationController
     erb :'/readers/login'
   end
 
+  get '/readers' do
+    if session[:id]
+      @reader = Reader.find(session[:id])
+      erb :'/readers/index'
+    else
+      redirect '/login'
+    end
+  end
 
-
+  get '/reader/:slug' do
+    if session[:id]
+      @reader = Reader.find_by_slug(params[:slug])
+      erb :'/readers/show'
+    else
+      redirect '/login'
+    end
+  end
 
 end
