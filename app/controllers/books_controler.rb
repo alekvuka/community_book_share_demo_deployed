@@ -32,11 +32,19 @@ class BooksController < ApplicationController
       if Book.find_by(name: params[:name])
         redirect '/books'
       end
-      @book = Book.create(name: params[:name], author: params[:author], description: params[:description])
-      @book.owner = Reader.find(session[:id])
+      @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
+      @book.owner = Reader.find(session[:id]).id
       @book.rating = @book.add_new_rating(params[:rating].to_f)
+      @book.community_id = Reader.find(session[:id]).community.id
+      @book.save
       redirect '/books'
     end
     redirect '/login'
   end
+
+  post '/rate/:id' do
+    Book.find(params[:id]).add_new_rating(params[:rating].to_f).save
+    erb :'/books/index'
+  end
+
 end

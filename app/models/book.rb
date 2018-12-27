@@ -8,13 +8,13 @@ class Book < ActiveRecord::Base
   def initialize(*args)
     super
     @all_ratings = Array.new
+    @comments = Hash.new
   end
 
   def add_new_rating(rating)
     @all_ratings << rating
     sum = 0.0
-    @rating = @all_ratings.map{|rating| sum += rating}[0] / @all_ratings.size.to_f
-    @rating
+    @all_ratings.map{|rating| sum += rating}[0] / @all_ratings.size.to_f
   end
 
   def slug

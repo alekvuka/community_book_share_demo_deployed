@@ -1,7 +1,26 @@
 <h1><%=@book.name%></h1>
 <ul>
   author name: <%=@book.name%><br>
-  description: <%=@book.description%>
-  book's owner: <%=@book.readers.name%>
-
+  description: <%=@book.description%><br>
+  Community rating: <%=@book.rating%><br>
+  Owner's comments:<%=@book.rating%><br>
 </ul>
+To borrow the book, contant its owner, <%=Reader.find(@book.owner).name%>, at <%=Reader.find(@book.owner).email%> <br><br>
+Have you read the book? Rate it!<br>
+<form method = 'POST' action = '/rate/<%=@book.id%>'>
+  terrible<input type='range' name='rating' min="1" max="5" list="tickmarks" required>amazing<br><br>
+  <datalist id="tickmarks">
+    <option value="1" label="1">
+    <option value="2" label="2">
+    <option value="3" label="3">
+    <option value="4" label="4">
+    <option value="5" label="5">
+  </datalist>
+  <input type='submit' value='rate it'>
+</form>
+
+<%if session[:id].to_s == @book.owner%>
+  <form type='POST' action='/books/edit'>
+    <input type='submit' value='edit your book'>
+  </form>
+<%end%>
