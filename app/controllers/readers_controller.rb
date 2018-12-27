@@ -87,7 +87,6 @@ class ReadersController < ApplicationController
     else
       redirect '/login'
     end
-
   end
 
 

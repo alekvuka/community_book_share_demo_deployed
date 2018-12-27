@@ -1,1 +1,11 @@
+
+<img src="https://farm4.staticflickr.com/3879/14609973659_a5a83d6084_k.jpg" alt="books" style="width:800px;height:300px;">
+
 <%= yield %>
+<p>
+  ----------------------------------<br>
+<a href='/readers'>readers</a>
+<a href='/readers/show/<%=Reader.find(session[:id]).slug'>profile</a>
+<a href='/books'>books</a>
+<a href='/readers/logout'>logout</a>
+</p>
