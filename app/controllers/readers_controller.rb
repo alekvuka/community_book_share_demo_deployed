@@ -37,7 +37,6 @@ class ReadersController < ApplicationController
     session[:id] = @reader.id
 
     redirect '/books'
-
   end
 
   get '/readers/logout' do

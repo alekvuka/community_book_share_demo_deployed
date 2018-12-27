@@ -45,37 +45,53 @@ class BooksController < ApplicationController
   end
 
   post '/rate/:slug' do
-    book = Book.find_by_slug(params[:slug])
-    book.rating = book.add_new_rating(params[:rating].to_f)
-    book.save
-    erb :'books/index'
+    if session[:id]
+      book = Book.find_by_slug(params[:slug])
+      book.rating = book.add_new_rating(params[:rating].to_f)
+      book.save
+      erb :'books/index'
+    else
+      redirect '/login'
+    end
   end
 
   get '/books/edit/:slug' do
-    @book = Book.find_by_slug(params[:slug])
-    erb :'/books/edit'
+    if session[:id]
+      @book = Book.find_by_slug(params[:slug])
+      erb :'/books/edit'
+    else
+      redirect '/login'
+    end
   end
 
   patch '/books/edit/:slug' do
-    book = Book.find_by_slug(params[:slug])
-    if !params[:name].empty?
-      book.name = params[:name]
-    elsif !params[:author].empty?
-      book.author = params[:author]
-    elsif !params[:description].empty?
-      book.description = params[:description]
-    else !params[:comments].empty?
-      book.comments = params[:comments]
+    if session[:id]
+      book = Book.find_by_slug(params[:slug])
+      if !params[:name].empty?
+        book.name = params[:name]
+      elsif !params[:author].empty?
+        book.author = params[:author]
+      elsif !params[:description].empty?
+        book.description = params[:description]
+      else !params[:comments].empty?
+        book.comments = params[:comments]
+      end
+      book.save
+      redirect '/books'
+    else
+      redirect '/login'
     end
-    book.save
-    redirect '/books'
+
   end
 
   delete '/books/delete/:slug' do
-    book = Book.find_by_slug(params[:slug])
-    book.delete
-    redirect '/books'
+    if session[:id]
+      book = Book.find(session[:id])
+      book.delete
+      redirect '/books'
+    else
+      redirect '/login'
+    end
   end
-
 
 end
