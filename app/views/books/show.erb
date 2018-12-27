@@ -5,6 +5,7 @@
   Community rating: <%=@book.rating%><br>
   Owner's comments:<%=@book.rating%><br>
 </ul>
+<%binding.pry%>
 To borrow the book, contant its owner, <%=Reader.find(@book.owner).name%>, at <%=Reader.find(@book.owner).email%> <br><br>
 Have you read the book? Rate it!<br>
 <form method = 'POST' action = '/rate/<%=@book.id%>'>

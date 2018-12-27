@@ -34,7 +34,10 @@ class BooksController < ApplicationController
       end
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
       @book.owner = Reader.find(session[:id]).id
-      @book.rating = @book.add_new_rating(params[:rating].to_f)
+      @book.number_of_ratings = 0.0
+      @book.all_ratings = 0.0
+      @book.save
+      @book.rating = @book.add_new_rating(params[:rating])
       @book.community_id = Reader.find(session[:id]).community.id
       @book.save
       redirect '/books'
@@ -43,6 +46,7 @@ class BooksController < ApplicationController
   end
 
   post '/rate/:id' do
+    binding.pry
     Book.find(params[:id]).add_new_rating(params[:rating].to_f).save
     erb :'/books/index'
   end

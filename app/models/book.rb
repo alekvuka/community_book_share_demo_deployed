@@ -3,18 +3,12 @@ class Book < ActiveRecord::Base
   belongs_to :community
   has_many :readers, through: :reader_books
 
-  attr_reader :all_ratings
 
-  def initialize(*args)
-    super
-    @all_ratings = Array.new
-    @comments = Hash.new
-  end
-
-  def add_new_rating(rating)
-    @all_ratings << rating
-    sum = 0.0
-    @all_ratings.map{|rating| sum += rating}[0] / @all_ratings.size.to_f
+  def add_new_rating(new_rating)
+    self.all_ratings = self.all_ratings + new_rating.to_f
+    self.number_of_ratings = self.number_of_ratings + 1.0
+    rating = self.all_ratings/self.number_of_ratings
+    rating
   end
 
   def slug

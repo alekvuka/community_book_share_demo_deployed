@@ -8,6 +8,8 @@ class CreateBooks < ActiveRecord::Migration
       t.string :comments
       t.string :owner
       t.integer :community_id
+      t.float :all_ratings
+      t.float :number_of_ratings
     end
   end
 end
