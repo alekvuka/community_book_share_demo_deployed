@@ -4,7 +4,7 @@ username: <%=@reader.username%><br>
 community: <%=@reader.community.name%><br><br>
 
 <%if @reader.id == session[:id]%>
-  <form method='GET' action='/readers/edit/@reader.slug'>
+  <form method='GET' action='/readers/edit/<%=@reader.slug%>'>
     <input type='submit' value='edit my profile'>
   </form>
 <%end%>

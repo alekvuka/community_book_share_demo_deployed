@@ -8,6 +8,6 @@ class Community < ActiveRecord::Base
   end
 
   def self.find_by_slug(slug)
-    Comminuty.all.find { |community| community.slug == slug }
+    Community.all.find { |community| community.slug == slug }
   end
 end
