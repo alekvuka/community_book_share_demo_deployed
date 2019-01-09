@@ -67,13 +67,17 @@ class BooksController < ApplicationController
   patch '/books/edit/:slug' do
     if session[:id]
       book = Book.find_by_slug(params[:slug])
+
       if !params[:name].empty?
         book.name = params[:name]
-      elsif !params[:author].empty?
+      end
+      if !params[:author].empty?
         book.author = params[:author]
-      elsif !params[:description].empty?
+      end
+      if !params[:description].empty?
         book.description = params[:description]
-      else !params[:comments].empty?
+      end
+      if !params[:comments].empty?
         book.comments = params[:comments]
       end
       book.save

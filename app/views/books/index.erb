@@ -1,5 +1,7 @@
 <h1>Here are all the books in your Community!</h1>
 <h2>If you want to add a book, click <a href='/books/new'>here!</a></h2>
 <%Book.all.each do |book|%>
-  <a href='/books/<%=book.slug%>'><%=book.name%></a><br>
+  <%if book.community == Reader.find(session[:id]).community%>
+    <a href='/books/<%=book.slug%>'><%=book.name%></a><br>
+  <%end%>
 <%end%>

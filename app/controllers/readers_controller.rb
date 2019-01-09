@@ -30,7 +30,7 @@ class ReadersController < ApplicationController
     if params[:community] == nil
       @reader.community = Community.create(name: params[:new_community])
     else
-      @reader.community = Community.find_by(name: params[:community])
+      @reader.community = Community.find(params[:community])
     end
 
     @reader.save

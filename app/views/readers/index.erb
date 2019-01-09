@@ -1,4 +1,6 @@
 <h1>Here are all the readers in the <%=@reader.community.name%> communty:</h1>
 <%Reader.all.each do |reader|%>
-<a href='/readers/<%=reader.slug%>'><%=@reader.name%></a>
+  <%if reader.community == @reader.community%>
+    <a href='/readers/<%=reader.slug%>'><%=reader.name%></a>
+  <%end%>
 <%end%>

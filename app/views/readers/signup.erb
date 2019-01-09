@@ -6,7 +6,7 @@
   password: <input type='password' name='password' required><br>
   <h3>Choose a community below:</h3>
       <%Community.all.each do |community|%>
-         <input type='radio' name='community' value=<%=community%><%=community.name%>
+         <input type='radio' name='community' value='<%=community.id%>'><%=community.name%>
       <%end%>
   <h3>Or a new community:</h3>
   Community name:<input type='text' name='new_community'><br><br>
