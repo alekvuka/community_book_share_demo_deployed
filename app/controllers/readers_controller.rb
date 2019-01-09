@@ -25,6 +25,13 @@ class ReadersController < ApplicationController
   end
 
   post '/signup' do
+
+    Reader.all.each do |reader|
+      if reader.username == params[:username]
+        redirect '/signup'
+      end
+    end
+
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
@@ -75,7 +82,18 @@ class ReadersController < ApplicationController
     if session[:id]
       @reader = Reader.find(session[:id])
       @reader.name = params[:name]
-      @reader.username = params[:username]
+
+      username_same = false
+      Reader.all.each do |reader|
+        if reader.username == params[:username]
+          username_same = true
+        end
+      end
+
+      if username_same !=true && !params[:username].empty?
+        @reader.username = params[:username]
+      end
+
       if params[:new_community].empty?
         @reader.community = Community.find(params[:community])
       else
@@ -87,7 +105,6 @@ class ReadersController < ApplicationController
       redirect '/login'
     end
   end
-
 
   delete '/readers/delete/:slug' do
     if session[:id]

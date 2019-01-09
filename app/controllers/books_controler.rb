@@ -31,6 +31,7 @@ class BooksController < ApplicationController
       if Book.find_by(name: params[:name])
         redirect '/books'
       end
+
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
       @book.owner = Reader.find(session[:id]).id
       @book.number_of_ratings = 0.0
