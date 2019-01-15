@@ -29,6 +29,17 @@ class BooksController < ApplicationController
 
   post '/books' do
     if session[:id]
+
+      if params[:name].empty? || params[:author].empty?
+        redirect '/books/new'
+      end
+
+      Books.all.each do |book|
+        if book.slug == params[:name].downcase.tr(' ', '-')
+          redirect '/books/new'
+        end
+      end
+
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
       @book.reader = Reader.find(session[:id])
       @book.community = Reader.find(session[:id]).community
