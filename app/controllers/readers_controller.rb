@@ -35,6 +35,10 @@ class ReadersController < ApplicationController
       end
     end
 
+    if params[:community] == nil && params[:new_community].empty?
+      redirect '/signup'
+    end 
+
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
