@@ -2,7 +2,6 @@ class Community < ActiveRecord::Base
   has_many :books
   has_many :readers
 
-
   def slug
     name.downcase.tr(' ', '-')
   end

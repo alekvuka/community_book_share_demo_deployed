@@ -18,6 +18,7 @@ class BooksController < ApplicationController
   end
 
   get '/books/:slug' do
+
     if session[:id]
       @book = Book.find_by_slug(params[:slug])
       erb :'/books/show'
@@ -54,6 +55,9 @@ class BooksController < ApplicationController
 
   get '/books/edit/:slug' do
     if session[:id]
+      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+          redirect '/books'
+      end
       @book = Book.find_by_slug(params[:slug])
       erb :'/books/edit'
     else
