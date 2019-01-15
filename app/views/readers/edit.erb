@@ -1,5 +1,5 @@
 <h3>Edit <%=current_user.name%></h3>
-<form method='post' action='/readers/edit/<%=current_user.slug%>'>
+<form method='post' action='/readers/<%=current_user.slug%>/edit'>
   <input type="hidden" name="_method" value="PATCH">
   name: <input type='text' name='name' value='<%=current_user.name%>'><br>
   username: <input type='text' name='username' value='<%=current_user.username%>'><br>
@@ -10,7 +10,7 @@
   Or create a new community to join:<input type='text' name='new_community'><br><br>
   <input type='submit' value='edit your profile'>
 </form>
-<form method='post' action='/readers/delete/%<=current_user.slug%>'>
+<form method='post' action='/readers/<%=current_user.slug%>/delete'>
   <input type="hidden" name="_method" value="DELETE">
   <input type='submit' value='delete your profile'>
 </form>

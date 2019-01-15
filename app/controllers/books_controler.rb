@@ -67,7 +67,7 @@ class BooksController < ApplicationController
     end
   end
 
-  get '/books/edit/:slug' do
+  get '/books/:slug/edit' do
     if logged_in?
       if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
@@ -79,7 +79,7 @@ class BooksController < ApplicationController
     end
   end
 
-  patch '/books/edit/:slug' do
+  patch '/books/:slug/edit' do
     if logged_in?
 
       if Book.find_by_slug(params[:slug]).reader != current_user
@@ -108,16 +108,16 @@ class BooksController < ApplicationController
 
   end
 
-  delete '/books/delete/:slug' do
+  delete '/books/:slug/delete' do
     if logged_in?
 
       if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
       end
 
-      book = Book.find(session[:id])
-      book.delete
+      Book.find_by_slug(params[:slug]).delete
       redirect '/books'
+      
     else
       redirect '/login'
     end

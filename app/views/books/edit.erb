@@ -1,5 +1,5 @@
 <h1> Edit <%=@book.name%></h1>
-<form method='POST' action='/books/edit/<%=@book.slug%>' form='new_book'><br>
+<form method='POST' action='/books/<%=@book.slug%>/edit' form='new_book'><br>
   <input type="hidden" name="_method" value="PATCH">
   edit book name:<input type='text' name='name' value='<%=@book.name%>'required><br>
   edit book author:<input type='text' name='author' value='<%=@book.author%>'required><br>
@@ -10,7 +10,7 @@
   <input type='submit' value='Edit your book!'>
 </form>
 
-<form method='POST' action='/books/delete/<%=@book.slug%>' form='new_book'><br>
+<form method='POST' action='/books/<%=@book.slug%>/delete' form='new_book'><br>
   <input type="hidden" name="_method" value="DELETE">
   <input type='submit' value='Delete your book!'>
 </form>
