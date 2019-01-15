@@ -44,6 +44,9 @@ class BooksController < ApplicationController
 
   post '/rate/:slug' do
     if session[:id]
+      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+          redirect '/books'
+      end
       book = Book.find_by_slug(params[:slug])
       book.rating = book.add_new_rating(params[:rating].to_f)
       book.save
