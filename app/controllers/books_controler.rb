@@ -29,13 +29,12 @@ class BooksController < ApplicationController
   post '/books' do
     if session[:id]
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
-      binding.pry
-      @book.reader_id = Reader.find(session[:id]).id
+      @book.reader = Reader.find(session[:id])
+      @book.community = Reader.find(session[:id]).community
       @book.number_of_ratings = 0.0
       @book.all_ratings = 0.0
       @book.save
       @book.rating = @book.add_new_rating(params[:rating])
-      @book.community_id = Reader.find(session[:id]).community.id
       @book.save
       redirect '/books'
     end

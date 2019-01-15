@@ -5,7 +5,7 @@
   Community rating: <%=@book.rating.round(3)%><br>
   Owner's comments:<%=@book.comments%><br>
 </ul>
-To borrow the book, contant its owner, <%=Reader.find(@book.owner).name%>, at <%=Reader.find(@book.owner).email%> <br><br>
+To borrow the book, contant its owner, <%=@book.reader.name%>, at <%=@book.reader.email%> <br><br>
 Have you read the book? Rate it!<br>
 <form method = 'POST' action = '/rate/<%=@book.slug%>'>
   terrible<input type='range' name='rating' min="1" max="5" list="tickmarks" required>amazing<br><br>
@@ -18,7 +18,7 @@ Have you read the book? Rate it!<br>
   </datalist>
   <input type='submit' value='rate it'>
 </form>
-<%if session[:id].to_s == @book.owner%>
+<%if Reader.find(session[:id]) == @book.reader%>
   <form type='POST' action='/books/edit/<%=@book.slug%>'>
     <input type='submit' value='edit your book'>
   </form>
