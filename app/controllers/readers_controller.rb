@@ -71,6 +71,9 @@ class ReadersController < ApplicationController
 
   get '/readers/edit/:slug' do
     if session[:id]
+      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+        redirect '/readers'
+      end
       @reader = Reader.find_by_slug(params[:slug])
       erb :'/readers/edit'
     else
@@ -80,6 +83,11 @@ class ReadersController < ApplicationController
 
   patch '/readers/edit/:slug' do
     if session[:id]
+
+      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+        redirect '/readers'
+      end
+
       @reader = Reader.find(session[:id])
       @reader.name = params[:name]
 
@@ -108,6 +116,11 @@ class ReadersController < ApplicationController
 
   delete '/readers/delete/:slug' do
     if session[:id]
+
+      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+        redirect '/readers'
+      end
+
       reader = Reader.find_by_slug(params[:slug])
       reader.delete
       redirect '/logout'
