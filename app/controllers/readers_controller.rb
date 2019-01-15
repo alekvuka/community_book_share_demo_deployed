@@ -37,14 +37,19 @@ class ReadersController < ApplicationController
 
     if params[:community] == nil && params[:new_community].empty?
       redirect '/signup'
-    end 
+    end
+
+    if !params[:new_community].empty?
+      Community.all.each do |community|
+        if community.slug == params[:new_community].downcase.tr(' ', '-')
+            redirect '/signup'
+        end
+      end
+    end
 
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
-      if params[:new_community].empty?
-        redirect '/signup'
-      end
       @reader.community = Community.create(name: params[:new_community])
     else
       @reader.community = Community.find(params[:community])
