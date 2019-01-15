@@ -30,6 +30,9 @@ class ReadersController < ApplicationController
       if reader.username == params[:username]
         redirect '/signup'
       end
+      if reader.slug == params[:name].downcase.tr(' ', '-')
+        redirect '/signup'
+      end 
     end
 
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
