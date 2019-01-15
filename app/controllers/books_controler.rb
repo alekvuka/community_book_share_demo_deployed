@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
 
   get '/books' do
-    if session[:id]
-      @reader = Reader.find(session[:id])
+    if logged_in?
+      @reader = current_user
       erb :'/books/index'
     else
       redirect '/login'
@@ -10,7 +10,7 @@ class BooksController < ApplicationController
   end
 
   get '/books/new' do
-    if session[:id]
+    if logged_in?
       erb :'/books/new'
     else
       redirect '/login'
@@ -19,7 +19,7 @@ class BooksController < ApplicationController
 
   get '/books/:slug' do
 
-    if session[:id]
+    if logged_in?
       @book = Book.find_by_slug(params[:slug])
       erb :'/books/show'
     else
@@ -28,7 +28,7 @@ class BooksController < ApplicationController
   end
 
   post '/books' do
-    if session[:id]
+    if logged_in?
 
       if params[:name].empty? || params[:author].empty?
         redirect '/books/new'
@@ -41,8 +41,8 @@ class BooksController < ApplicationController
       end
 
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
-      @book.reader = Reader.find(session[:id])
-      @book.community = Reader.find(session[:id]).community
+      @book.reader = current_user
+      @book.community = current_user.community
       @book.number_of_ratings = 0.0
       @book.all_ratings = 0.0
       @book.save
@@ -54,8 +54,8 @@ class BooksController < ApplicationController
   end
 
   post '/rate/:slug' do
-    if session[:id]
-      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+    if logged_in?
+      if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
       end
       book = Book.find_by_slug(params[:slug])
@@ -68,8 +68,8 @@ class BooksController < ApplicationController
   end
 
   get '/books/edit/:slug' do
-    if session[:id]
-      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+    if logged_in?
+      if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
       end
       @book = Book.find_by_slug(params[:slug])
@@ -80,9 +80,9 @@ class BooksController < ApplicationController
   end
 
   patch '/books/edit/:slug' do
-    if session[:id]
+    if logged_in?
 
-      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+      if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
       end
 
@@ -109,9 +109,9 @@ class BooksController < ApplicationController
   end
 
   delete '/books/delete/:slug' do
-    if session[:id]
+    if logged_in?
 
-      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+      if Book.find_by_slug(params[:slug]).reader != current_user
           redirect '/books'
       end
 

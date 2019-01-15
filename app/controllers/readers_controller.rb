@@ -12,7 +12,7 @@ class ReadersController < ApplicationController
     @user = Reader.find_by(username: params[:username])
 
     if @user && @user.authenticate(params[:password])
-      session[:id] = @user.id
+      session[:user_id] = @user.id
       erb :'/books/index'
     else
       redirect '/login'
@@ -56,7 +56,7 @@ class ReadersController < ApplicationController
     end
 
     @reader.save
-    session[:id] = @reader.id
+    session[:user_id] = @user.id
 
     redirect '/books'
   end
@@ -67,8 +67,8 @@ class ReadersController < ApplicationController
   end
 
   get '/readers' do
-    if session[:id]
-      @reader = Reader.find(session[:id])
+    if slogged_in?
+      @reader = current_user
       erb :'/readers/index'
     else
       redirect '/login'
@@ -76,8 +76,8 @@ class ReadersController < ApplicationController
   end
 
   get '/readers/:slug' do
-    if session[:id]
-      @reader = Reader.find_by_slug(params[:slug])
+    if logged_in?
+      @reader = current_user
       erb :'/readers/show'
     else
       redirect '/login'
@@ -85,8 +85,8 @@ class ReadersController < ApplicationController
   end
 
   get '/readers/edit/:slug' do
-    if session[:id]
-      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+    if logged_in?
+      if Reader.find_by_slug(params[:slug]) != current_user
         redirect '/readers'
       end
       @reader = Reader.find_by_slug(params[:slug])
@@ -97,13 +97,13 @@ class ReadersController < ApplicationController
   end
 
   patch '/readers/edit/:slug' do
-    if session[:id]
+    if logged_in?
 
-      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+      if Reader.find_by_slug(params[:slug]) != current_user
         redirect '/readers'
       end
 
-      @reader = Reader.find(session[:id])
+      @reader = current_user
 
       if Reader.find(session[:id]).username != params[:username]
         Reader.all.each do |reader|
@@ -118,7 +118,7 @@ class ReadersController < ApplicationController
         @reader.username = params[:username]
       end
 
-      if Reader.find(session[:id]).name != params[:name]
+      if current_user.name != params[:name]
         Reader.all.each do |reader|
           if reader.slug == params[:name].downcase.tr(' ', '-')
             redirect '/readers'
@@ -147,9 +147,9 @@ class ReadersController < ApplicationController
   end
 
   delete '/readers/delete/:slug' do
-    if session[:id]
+    if logged_in?
 
-      if Reader.find_by_slug(params[:slug]) != Reader.find(session[:id])
+      if Reader.find_by_slug(params[:slug]) != current_user
         redirect '/readers'
       end
 
