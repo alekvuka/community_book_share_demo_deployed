@@ -32,7 +32,7 @@ class ReadersController < ApplicationController
       end
       if reader.slug == params[:name].downcase.tr(' ', '-')
         redirect '/signup'
-      end 
+      end
     end
 
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
@@ -95,17 +95,30 @@ class ReadersController < ApplicationController
       end
 
       @reader = Reader.find(session[:id])
-      @reader.name = params[:name]
 
-      username_same = false
-      Reader.all.each do |reader|
-        if reader.username == params[:username]
-          username_same = true
+      if Reader.find(session[:id]).username != params[:username]
+        Reader.all.each do |reader|
+          if reader.username == params[:username]
+            redirect '/readers'
+          end
         end
+
+        if params[:username].empty?
+          redirect '/readers'
+        end
+        @reader.username = params[:username]
       end
 
-      if username_same !=true && !params[:username].empty?
-        @reader.username = params[:username]
+      if Reader.find(session[:id]).name != params[:name]
+        Reader.all.each do |reader|
+          if reader.slug == params[:name].downcase.tr(' ', '-')
+            redirect '/readers'
+          end
+        end
+        if params[:name].empty?
+          redirect '/readers'
+        end
+        @reader.name = params[:name]
       end
 
       if params[:new_community].empty? && params[:community] == nil
