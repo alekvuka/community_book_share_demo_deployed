@@ -96,6 +96,11 @@ class BooksController < ApplicationController
 
   delete '/books/delete/:slug' do
     if session[:id]
+
+      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+          redirect '/books'
+      end
+
       book = Book.find(session[:id])
       book.delete
       redirect '/books'
