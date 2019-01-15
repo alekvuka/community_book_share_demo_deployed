@@ -35,6 +35,9 @@ class ReadersController < ApplicationController
     @reader = Reader.create(name: params[:name], email: params[:email], username: params[:username], password: params[:password])
 
     if params[:community] == nil
+      if params[:new_community].empty?
+        redirect '/signup'
+      end
       @reader.community = Community.create(name: params[:new_community])
     else
       @reader.community = Community.find(params[:community])
@@ -100,6 +103,10 @@ class ReadersController < ApplicationController
 
       if username_same !=true && !params[:username].empty?
         @reader.username = params[:username]
+      end
+
+      if params[:new_community].empty? && params[:community] == nil
+        redirect '/readers'
       end
 
       if params[:new_community].empty?
