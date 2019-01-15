@@ -67,6 +67,11 @@ class BooksController < ApplicationController
 
   patch '/books/edit/:slug' do
     if session[:id]
+
+      if Book.find_by_slug(params[:slug]).reader != Reader.find(session[:id])
+          redirect '/books'
+      end
+
       book = Book.find_by_slug(params[:slug])
 
       if !params[:name].empty?
