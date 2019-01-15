@@ -34,7 +34,7 @@ class BooksController < ApplicationController
         redirect '/books/new'
       end
 
-      Reader.find(session[:id]).community.books do |book|
+      current_user.community.books do |book|
         if book.slug == params[:name].downcase.tr(' ', '-')
           redirect '/books/new'
         end

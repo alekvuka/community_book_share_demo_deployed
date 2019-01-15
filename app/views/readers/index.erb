@@ -1,6 +1,6 @@
-<h1>Here are all the readers in the <%=@reader.community.name%> communty:</h1>
+<h1>Here are all the readers in the <%=current_user.community.name%> communty:</h1>
 <%Reader.all.each do |reader|%>
-  <%if reader.community == @reader.community%>
+  <%if reader.community == current_user.community%>
     <a href='/readers/<%=reader.slug%>'><%=reader.name%></a><br>
   <%end%>
 <%end%>

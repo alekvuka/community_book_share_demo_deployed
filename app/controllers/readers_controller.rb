@@ -9,9 +9,9 @@ class ReadersController < ApplicationController
       redirect '/login'
     end
 
-    @user = Reader.find_by(username: params[:username])
+    @reader = Reader.find_by(username: params[:username])
 
-    if @user && @user.authenticate(params[:password])
+    if @reader && @reader.authenticate(params[:password])
       session[:user_id] = @user.id
       erb :'/books/index'
     else
@@ -56,7 +56,7 @@ class ReadersController < ApplicationController
     end
 
     @reader.save
-    session[:user_id] = @user.id
+    session[:user_id] = @reader.id
 
     redirect '/books'
   end
@@ -67,8 +67,7 @@ class ReadersController < ApplicationController
   end
 
   get '/readers' do
-    if slogged_in?
-      @reader = current_user
+    if logged_in?
       erb :'/readers/index'
     else
       redirect '/login'
@@ -77,7 +76,7 @@ class ReadersController < ApplicationController
 
   get '/readers/:slug' do
     if logged_in?
-      @reader = current_user
+      @reader = Reader.find_by_slug(params[:slug])
       erb :'/readers/show'
     else
       redirect '/login'

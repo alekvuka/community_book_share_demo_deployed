@@ -3,10 +3,10 @@
 
 <%= yield %>
 <p>
-<%if session[:id] != nil%>
+<%if current_user != nil%>
   ----------------------------------<br>
   <a href='/readers'>readers</a>
-  <a href='/readers/<%=Reader.find(session[:id]).slug%>'>profile</a>
+  <a href='/readers/<%=current_user.slug%>'>profile</a>
   <a href='/books'>books</a>
   <a href='/books/new'>add a book</a>
   <a href='/readers/logout'>logout</a>

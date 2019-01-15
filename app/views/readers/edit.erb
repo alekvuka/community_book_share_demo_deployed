@@ -1,8 +1,8 @@
-<h3>Edit <%=@reader.name%></h3>
-<form method='post' action='/readers/edit/<%=@reader.slug%>'>
+<h3>Edit <%=current_user.name%></h3>
+<form method='post' action='/readers/edit/<%=current_user.slug%>'>
   <input type="hidden" name="_method" value="PATCH">
-  name: <input type='text' name='name' value='<%=@reader.name%>'><br>
-  username: <input type='text' name='username' value='<%=@reader.username%>'><br>
+  name: <input type='text' name='name' value='<%=current_user.name%>'><br>
+  username: <input type='text' name='username' value='<%=current_user.username%>'><br>
   Join a new community:<br>
   <%Community.all.each do |community|%>
     <input type='radio' name='community' value='<%=community.id%>'<%='checked' if community.id == @reader.community.id%>><%=community.name%><br>
@@ -10,7 +10,7 @@
   Or create a new community to join:<input type='text' name='new_community'><br><br>
   <input type='submit' value='edit your profile'>
 </form>
-<form method='post' action='/readers/delete/%<=@reader.slug%>'>
+<form method='post' action='/readers/delete/%<=current_user.slug%>'>
   <input type="hidden" name="_method" value="DELETE">
   <input type='submit' value='delete your profile'>
 </form>
