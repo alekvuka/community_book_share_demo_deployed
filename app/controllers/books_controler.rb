@@ -5,7 +5,7 @@ class BooksController < ApplicationController
       @reader = Reader.find(session[:id])
       erb :'/books/index'
     else
-      erb :'/readers/login'
+      redirect '/login'
     end
   end
 
@@ -13,7 +13,7 @@ class BooksController < ApplicationController
     if session[:id]
       erb :'/books/new'
     else
-      erb :'/readers/login'
+      redirect '/login'
     end
   end
 
@@ -23,7 +23,7 @@ class BooksController < ApplicationController
       @book = Book.find_by_slug(params[:slug])
       erb :'/books/show'
     else
-      erb :'/readers/login'
+      redirect '/login'
     end
   end
 
