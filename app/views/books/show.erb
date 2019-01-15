@@ -18,7 +18,7 @@ Have you read the book? Rate it!<br>
   </datalist>
   <input type='submit' value='rate it'>
 </form>
-
+<%binding.pry%>
 <%if session[:id].to_s == @book.owner%>
   <form type='POST' action='/books/edit/<%=@book.slug%>'>
     <input type='submit' value='edit your book'>
