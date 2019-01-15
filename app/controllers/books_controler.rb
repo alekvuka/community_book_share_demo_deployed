@@ -29,7 +29,8 @@ class BooksController < ApplicationController
   post '/books' do
     if session[:id]
       @book = Book.create(name: params[:name], author: params[:author], description: params[:description], comments: params[:comments])
-      @book.owner = Reader.find(session[:id]).id
+      binding.pry
+      @book.reader_id = Reader.find(session[:id]).id
       @book.number_of_ratings = 0.0
       @book.all_ratings = 0.0
       @book.save

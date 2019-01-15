@@ -1,8 +1,6 @@
 class Book < ActiveRecord::Base
-  has_many :reader_books
   belongs_to :community
-  has_many :readers, through: :reader_books
-
+  belongs_to :reader
 
   def add_new_rating(new_rating)
     self.all_ratings = self.all_ratings + new_rating.to_f

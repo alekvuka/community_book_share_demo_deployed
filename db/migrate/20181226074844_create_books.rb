@@ -6,7 +6,7 @@ class CreateBooks < ActiveRecord::Migration
       t.string :description
       t.float :rating
       t.string :comments
-      t.string :owner
+      t.integer :reader_id
       t.integer :community_id
       t.float :all_ratings
       t.float :number_of_ratings
