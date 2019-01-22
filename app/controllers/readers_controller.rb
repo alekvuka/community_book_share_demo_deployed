@@ -26,6 +26,10 @@ class ReadersController < ApplicationController
 
   post '/signup' do
 
+    if params[:username].empty? || params[:username] == nil
+      redirect '/signup'
+    end
+
     Reader.all.each do |reader|
       if reader.username == params[:username]
         redirect '/signup'
@@ -84,80 +88,83 @@ class ReadersController < ApplicationController
   end
 
   get '/readers/:slug/edit' do
-    if logged_in?
-      if Reader.find_by_slug(params[:slug]) != current_user
-        redirect '/readers'
-      end
-      @reader = Reader.find_by_slug(params[:slug])
-      erb :'/readers/edit'
-    else
+    if !logged_in?
       redirect '/login'
     end
+
+    if Reader.find_by_slug(params[:slug]) != current_user
+      redirect '/readers'
+    end
+
+    @reader = Reader.find_by_slug(params[:slug])
+    erb :'/readers/edit'
+
   end
 
   patch '/readers/:slug/edit' do
-    if logged_in?
-
-      if Reader.find_by_slug(params[:slug]) != current_user
-        redirect '/readers'
-      end
-
-      @reader = current_user
-
-      if current_user.username != params[:username]
-        Reader.all.each do |reader|
-          if reader.username == params[:username]
-            redirect '/readers'
-          end
-        end
-
-        if params[:username].empty?
-          redirect '/readers'
-        end
-        @reader.username = params[:username]
-      end
-
-      if current_user.name != params[:name]
-        Reader.all.each do |reader|
-          if reader.slug == params[:name].downcase.tr(' ', '-')
-            redirect '/readers'
-          end
-        end
-        if params[:name].empty?
-          redirect '/readers'
-        end
-        @reader.name = params[:name]
-      end
-
-      if params[:new_community].empty? && params[:community] == nil
-        redirect '/readers'
-      end
-
-      if params[:new_community].empty?
-        @reader.community = Community.find(params[:community])
-      else
-        @reader.community = Community.create(name: params[:new_community])
-      end
-      @reader.save
-      erb :'readers/index'
-    else
+    if !logged_in?
       redirect '/login'
     end
+
+    if Reader.find_by_slug(params[:slug]) != current_user
+      redirect '/readers'
+    end
+
+    @reader = current_user
+
+    if current_user.username != params[:username]
+
+      if Reader.find_by(username: params[:username])
+        redirect '/readers'
+      end
+
+      if params[:username].empty?
+        redirect '/readers'
+      end
+
+      @reader.username = params[:username]
+    end
+
+    if current_user.name != params[:name]
+      Reader.all.each do |reader|
+        if reader.slug == params[:name].downcase.tr(' ', '-')
+          redirect '/readers'
+        end
+      end
+
+      if params[:name].empty?
+        redirect '/readers'
+      end
+      @reader.name = params[:name]
+    end
+
+    if params[:new_community].empty? && params[:community] == nil
+      redirect '/readers'
+    end
+
+    if params[:new_community].empty?
+      @reader.community = Community.find(params[:community])
+    else
+      @reader.community = Community.create(name: params[:new_community])
+    end
+    @reader.save
+    erb :'readers/index'
+
   end
 
   delete '/readers/:slug/delete' do
-    if logged_in?
-
-      if Reader.find_by_slug(params[:slug]) != current_user
-        redirect '/readers'
-      end
-
-      reader = Reader.find_by_slug(params[:slug])
-      session.clear
-      reader.delete
-      redirect '/login'
-    else
+    if !logged_in?
       redirect '/login'
     end
+
+    if Reader.find_by_slug(params[:slug]) != current_user
+      redirect '/readers'
+    end
+
+    reader = Reader.find_by_slug(params[:slug])
+    session.clear
+    reader.delete
+    redirect '/login'
+
   end
 end
