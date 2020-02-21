@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  database: nyc_traffic_cam_deployed_development
+
+production:
+  adapter: postgresql
+  database: nyc_traffic_cam_deployed_development
