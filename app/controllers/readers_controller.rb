@@ -17,8 +17,14 @@ class ReadersController < ApplicationController
     else
       redirect '/login'
     end
-
   end
+
+  get '/demo' do
+    @reader = Reader.find(1)
+    session[:user_id] = @reader.id
+    erb :'/books/index'
+  end
+
 
   get '/signup' do
     erb :'/readers/signup'
